@@ -16,5 +16,5 @@ Entity 분석하기
 2. 1주차 과제를 끝냈을 시 review/[본인계정]에 PR날리기 (Merge금지)
 
 API 개발
-1. CartRestController TODO 2가지 API 개발하기
+1. ProductJPAController TODO 2가지 API 개발하기
 
