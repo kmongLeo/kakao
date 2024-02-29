@@ -28,3 +28,10 @@ API 개발
 
 API 개발하기
 1. Card TODO 개발하기
+
+
+----
+(memo)
+TODO : Java to Kotlin migration
+TODO : nGrinder test
+TODO : code coverage
