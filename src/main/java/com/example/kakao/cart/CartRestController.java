@@ -23,15 +23,16 @@ import static java.util.stream.Collectors.toList;
 @RestController
 public class CartRestController {
 
-    // (기능8) 장바구니 담기
+    // TODO : (기능1) 장바구니 담기
     //@PostMapping("/carts/add")
 
-    // (기능11) 주문하기 - (장바구니 업데이트)
+    // TODO : (기능2) 주문하기 - (장바구니 업데이트)
     //@PostMapping("/carts/update")
 
-    // (기능9) 장바구니 보기 - (주문화면, 결재화면)
+    // TODO : (기능3) 장바구니 보기 - (주문화면, 결재화면)
     //@GetMapping("/carts")
 
+    // TODO : (기능4) 모두 삭제
     //@PostMapping("/carts/clear")
 
 }
