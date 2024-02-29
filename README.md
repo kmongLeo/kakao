@@ -32,6 +32,7 @@ API 개발하기
 
 ----
 (memo)
-TODO : Java to Kotlin migration
-TODO : nGrinder test
-TODO : code coverage
+TODO
+1. Java to Kotlin migration
+2. nGrinder test
+3. code coverage
