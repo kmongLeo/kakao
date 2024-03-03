@@ -36,3 +36,5 @@ TODO
 1. Java to Kotlin migration
 2. nGrinder test
 3. code coverage
+4. spring batch
+5. queryDSL
