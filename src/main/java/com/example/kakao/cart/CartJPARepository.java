@@ -10,10 +10,9 @@ import java.util.Optional;
 
 
 public interface CartJPARepository extends JpaRepository<Cart, Integer> {
-
-
-
-
+    List<Cart> findAllByUserId(int userId);
+    List<Cart> findByUserIdOrderByOptionIdAsc(int userId);
+    List<Cart> deleteByUserId(int userId);
 
     // TODO : from native query to queryDSL migration
     @Query("select c from Cart c where c.option.id = :optionId and c.user.id = :userId")

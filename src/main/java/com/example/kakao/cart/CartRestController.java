@@ -22,8 +22,6 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 @RestController
 public class CartRestController {
-
-
     private final CartService cartListService;
     // TODO : (기능1) 장바구니 담기
     @PostMapping("/carts/add")
@@ -33,13 +31,26 @@ public class CartRestController {
         return ResponseEntity.ok(apiResult);
     }
 
-    // TODO : (기능2) 주문하기 - (장바구니 업데이트)
-    //@PostMapping("/carts/update")
+    @PostMapping("/carts/update")
+    public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> requestDTOs, Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        CartResponse.UpdateDTO responseDTO = cartListService.update(requestDTOs,userDetails.getUser());
+        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(responseDTO);
+        return ResponseEntity.ok(apiResult);
+    }
 
-    // TODO : (기능3) 장바구니 보기 - (주문화면, 결재화면)
-    //@GetMapping("/carts")
+    // (기능9) 장바구니 보기 - (주문화면, 결재화면)
+    @GetMapping("/carts")
+    public ResponseEntity<?> findAll(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        CartResponse.FindAllDTO responseDTO = cartListService.findAll(userDetails.getUser());
+        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(responseDTO);
+        return ResponseEntity.ok(apiResult);
+    }
 
-    // TODO : (기능4) 모두 삭제
-    //@PostMapping("/carts/clear")
+    @PostMapping("/carts/clear")
+    public ResponseEntity<?> clear(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        cartListService.clear(userDetails.getUser());
+        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(null);
+        return ResponseEntity.ok(apiResult);
+    }
 
 }
