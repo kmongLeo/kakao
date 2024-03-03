@@ -25,7 +25,7 @@ public class ProductService {
         Product productPS = productJPARepository.findById(id).orElseThrow(
                 () -> new Exception404("해당 상품을 찾을 수 없습니다. : " + id)
         );
-
+        // option table에 product 내용이 있으므로 option 테이블 select
         List<Option> optionListPS = optionJPARepository.findByProductId(productPS.getId());
         return new ProductResponse.FindByIdDTO(productPS, optionListPS);
 
