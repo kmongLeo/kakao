@@ -18,5 +18,29 @@ import java.util.stream.Collectors;
 @Service
 public class ProductService {
 
+    private final ProductJPARepository productJPARepository;
+    private final OptionJPARepository optionJPARepository;
+
+    public ProductResponse.FindByIdDTO findById (int id){
+        Product productPS = productJPARepository.findById(id).orElseThrow(
+                () -> new Exception404("해당 상품을 찾을 수 없습니다. : " + id)
+        );
+
+        List<Option> optionListPS = optionJPARepository.findByProductId(productPS.getId());
+        return new ProductResponse.FindByIdDTO(productPS, optionListPS);
+
+    }
+
+
+    public List<ProductResponse.FindAllDTO> findAll(int page){
+        Pageable pageable = PageRequest.of(page, 9);
+        Page<Product> pageContent = productJPARepository.findAll(pageable);
+        List<ProductResponse.FindAllDTO> responseDTOs = pageContent.getContent().stream().map(ProductResponse.FindAllDTO::new).collect(Collectors.toList());
+        return responseDTOs;
+    }
+
+
+
+
 
 }
