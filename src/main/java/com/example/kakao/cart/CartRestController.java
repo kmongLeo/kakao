@@ -23,8 +23,15 @@ import static java.util.stream.Collectors.toList;
 @RestController
 public class CartRestController {
 
+
+    private final CartService cartListService;
     // TODO : (기능1) 장바구니 담기
-    //@PostMapping("/carts/add")
+    @PostMapping("/carts/add")
+    public ResponseEntity<?> addCartList(@RequestBody @Valid List<CartRequest.SaveDTO> requestDTOs, Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails){
+        cartListService.addCardList(requestDTOs, userDetails.getUser());
+        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(null);
+        return ResponseEntity.ok(apiResult);
+    }
 
     // TODO : (기능2) 주문하기 - (장바구니 업데이트)
     //@PostMapping("/carts/update")
