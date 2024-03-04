@@ -23,7 +23,14 @@ import static java.util.stream.Collectors.toList;
 @RestController
 public class CartRestController {
     private final CartService cartListService;
-    // TODO : (기능1) 장바구니 담기
+
+    /**
+     * carts 추가 API
+     * @param requestDTOs : List로 해당 옵션 ID, 수량을 받아온다.
+     * @param errors
+     * @param userDetails : user 정보
+     * @return
+     */
     @PostMapping("/carts/add")
     public ResponseEntity<?> addCartList(@RequestBody @Valid List<CartRequest.SaveDTO> requestDTOs, Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails){
         cartListService.addCardList(requestDTOs, userDetails.getUser());
@@ -31,6 +38,13 @@ public class CartRestController {
         return ResponseEntity.ok(apiResult);
     }
 
+    /**
+     * 주문시 장바구니 업데이트 (추후 주문이 일어날 때 update 해주는 것)
+     * @param requestDTOs
+     * @param errors
+     * @param userDetails
+     * @return
+     */
     @PostMapping("/carts/update")
     public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> requestDTOs, Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails) {
         CartResponse.UpdateDTO responseDTO = cartListService.update(requestDTOs,userDetails.getUser());
@@ -39,6 +53,12 @@ public class CartRestController {
     }
 
     // (기능9) 장바구니 보기 - (주문화면, 결재화면)
+
+    /**
+     * 장바구니 list select
+     * @param userDetails
+     * @return
+     */
     @GetMapping("/carts")
     public ResponseEntity<?> findAll(@AuthenticationPrincipal CustomUserDetails userDetails) {
         CartResponse.FindAllDTO responseDTO = cartListService.findAll(userDetails.getUser());
@@ -46,6 +66,11 @@ public class CartRestController {
         return ResponseEntity.ok(apiResult);
     }
 
+    /**
+     *
+     * @param userDetails
+     * @return
+     */
     @PostMapping("/carts/clear")
     public ResponseEntity<?> clear(@AuthenticationPrincipal CustomUserDetails userDetails) {
         cartListService.clear(userDetails.getUser());
