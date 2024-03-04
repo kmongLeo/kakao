@@ -1,5 +1,6 @@
 package com.example.kakao.product;
 
+import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao.option.Option;
 import com.example.kakao.option.OptionJPARepository;
 import java.util.Optional;
@@ -48,7 +49,7 @@ public class ProductService {
 
     @Transactional(readOnly = true)
     public ProductResponse getProduct(int id) {
-        Product product = productJPARepository.findById(id).orElseThrow(() -> new IllegalArgumentException("no product :"+id));
+        Product product = productJPARepository.findById(id).orElseThrow(() -> new Exception404("no products: "+id));
         List<Option> option = optionJPARepository.findByProductId(id);
 
         ProductResponse response = ProductResponse.of(product, option);

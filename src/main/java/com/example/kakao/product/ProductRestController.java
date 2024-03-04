@@ -22,8 +22,9 @@ public class ProductRestController {
 
     // TODO : product 전체 조회
     @GetMapping("/products")
-    public Page<ProductResponse> getAllProductsPaging(@RequestParam(value = "page", defaultValue="0") int page){
-        return productService.getAllProductsPaging(page);
+    public ResponseEntity<Page<ProductResponse>> getProducts(@RequestParam(value = "page", defaultValue="0") int page){
+        Page<ProductResponse> productResponse = productService.getAllProductsPaging(page);
+        return ResponseEntity.ok(productResponse);
     }
 
     @GetMapping("/productList")
