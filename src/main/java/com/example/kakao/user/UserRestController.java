@@ -18,7 +18,7 @@ import java.util.Map;
 public class UserRestController {
 
 
-    // (기능1) 회원가입 완성!
+    // (기능1) 회원가입 다시 해야해야겠어. 수정
     // @PostMapping("/join")
 
 
