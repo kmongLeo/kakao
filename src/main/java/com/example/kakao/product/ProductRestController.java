@@ -20,7 +20,6 @@ public class ProductRestController {
     @Autowired
     private ProductService productService;
 
-    // TODO : product 전체 조회
     @GetMapping("/products")
     public ResponseEntity<Page<ProductResponse>> getProducts(@RequestParam(value = "page", defaultValue="0") int page){
         Page<ProductResponse> productResponse = productService.getAllProductsPaging(page);
@@ -32,8 +31,6 @@ public class ProductRestController {
         return productService.getAllProducts();
     }
 
-
-    // TODO : (기능5) 개별 상품 상세 조회
     @GetMapping("/products/{id}")
     public ProductResponse getProduct(@PathVariable("id") int id){
         return productService.getProduct(id);
