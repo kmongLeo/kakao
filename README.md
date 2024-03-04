@@ -38,6 +38,7 @@ TODO
 3. code coverage
 4. spring batch
 5. queryDSL
+6. 모니터링
 
 ## commit message
 - feat : 새로운 기능에 대한 커밋
