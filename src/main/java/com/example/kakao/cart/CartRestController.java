@@ -38,15 +38,15 @@ public class CartRestController {
 
     // (기능8) 장바구니 담기
     @PostMapping("/carts/add")
-    public ResponseEntity addCart(@AuthenticationPrincipal CustomUserDetails user, @RequestBody CartRequest request){
-        cartService.addCart(user.getUser().getId(), request);
+    public ResponseEntity addCart(@RequestBody List<CartRequest> request, @AuthenticationPrincipal CustomUserDetails user){
+        cartService.addCart(request,user.getUser());
         return ResponseEntity.ok().build();
     }
 
     // (기능11) 주문하기 - (장바구니 업데이트)
     @PostMapping("/carts/update")
-    public void updateCart(@RequestBody List<CartRequest> request){
-        cartService.updateCart(request);
+    public void updateCart(@RequestBody List<CartRequest> request, @AuthenticationPrincipal CustomUserDetails user){
+        cartService.updateCart(request, user.getUser());
     }
 
     // (기능9) 장바구니 보기 - (주문화면, 결재화면)
