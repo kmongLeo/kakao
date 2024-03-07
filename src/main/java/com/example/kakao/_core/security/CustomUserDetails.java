@@ -1,6 +1,7 @@
 package com.example.kakao._core.security;
 
 import com.example.kakao.user.User;
+import com.example.kakao.user.UserService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
