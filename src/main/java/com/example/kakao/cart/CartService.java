@@ -81,7 +81,7 @@ public class CartService {
 
         //암것도 없으면
         if (userCartList.isEmpty()) {
-            throw new Exception404("there is no cart");
+            throw new Exception404("there is no cart with user : " + user.getId());
         }
 
         //있음
