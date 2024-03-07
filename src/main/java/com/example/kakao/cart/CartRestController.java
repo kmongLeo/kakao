@@ -53,8 +53,8 @@ public class CartRestController {
 
     // (기능9) 장바구니 보기 - (주문화면, 결재화면)
     @GetMapping("/carts")
-    public CartResponse getCart(@AuthenticationPrincipal CustomUserDetails user){
-        return cartService.getCartList(user.getUser().getId());
+    public List<CartResponse> getCart(@AuthenticationPrincipal CustomUserDetails user){
+        return cartService.getCartList(user.getUser());
     }
 
     @PostMapping("/carts/clear")

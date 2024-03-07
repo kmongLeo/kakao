@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -97,15 +98,9 @@ public class CartService {
 
     }
 
-    public CartResponse getCartList(int userId) {
-//        Cart cart = cartJPARepository.findByUserId(userId)
-//                .orElseThrow(()-> new Exception404("no cart for user : "+ userId));
-//
-//        Option option = optionJPARepository.findById(cart.getOption().getId())
-//                .orElseThrow(()-> new Exception404("no option : "+ cart.getOption().getId()));
-//
-//        return CartResponse.of(cart, option);
-        return null;
+    public List<CartResponse> getCartList(User user) {
+        List<Cart> cart = cartJPARepository.findByUserId(user.getId());
+        return cart.stream().map(CartResponse::of).collect(Collectors.toList());
     }
 
     @Transactional
