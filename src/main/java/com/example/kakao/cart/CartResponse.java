@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 @Getter
 @Builder
+@Setter
 public class CartResponse {
 
     private int cartId;
@@ -20,15 +21,27 @@ public class CartResponse {
     private String optionName;
     private int quantity;
     private int price;
-    private Option option;
-    private int totalPrice;
 
-    public static CartResponse of(Cart cart, Option option){
+    public static CartResponse of(Cart cart){
         return CartResponse.builder()
                 .cartId(cart.getId())
-                .option(option)
+                .optionId(cart.getOption().getId())
+                .optionName(cart.getOption().getOptionName())
                 .quantity(cart.getQuantity())
                 .price(cart.getPrice())
                 .build();
+
     }
+
+    @Getter
+    public static class CartUpdateResponse{
+        private int totalPrice;
+        private List<CartResponse> carts;
+
+        public CartUpdateResponse(List<Cart> cartList) {
+            this.carts = cartList.stream().map(CartResponse::of).collect(Collectors.toList());
+            this.totalPrice = cartList.stream().mapToInt(Cart::getPrice).sum();
+        }
+    }
+
 }

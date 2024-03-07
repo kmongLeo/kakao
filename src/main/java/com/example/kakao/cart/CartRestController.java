@@ -38,15 +38,17 @@ public class CartRestController {
 
     // (기능8) 장바구니 담기
     @PostMapping("/carts/add")
-    public ResponseEntity addCart(@RequestBody List<CartRequest> request, @AuthenticationPrincipal CustomUserDetails user){
+    public ResponseEntity<?> addCart(@RequestBody List<CartRequest> request, @AuthenticationPrincipal CustomUserDetails user){
         cartService.addCart(request,user.getUser());
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiUtils.success(null));
     }
 
     // (기능11) 주문하기 - (장바구니 업데이트)
     @PostMapping("/carts/update")
-    public void updateCart(@RequestBody List<CartRequest> request, @AuthenticationPrincipal CustomUserDetails user){
-        cartService.updateCart(request, user.getUser());
+    public ResponseEntity<?> updateCart(@RequestBody List<CartRequest> request, @AuthenticationPrincipal CustomUserDetails user){
+        CartResponse.CartUpdateResponse response = cartService.updateCart(request, user.getUser());
+        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(response);
+        return ResponseEntity.ok(apiResult);
     }
 
     // (기능9) 장바구니 보기 - (주문화면, 결재화면)
