@@ -104,7 +104,7 @@ public class CartService {
     }
 
     @Transactional
-    public void deleteCart(int cartId) {
-        cartJPARepository.deleteById(cartId);
+    public void deleteCart(User user) {
+        cartJPARepository.deleteByUserId(user.getId());
     }
 }

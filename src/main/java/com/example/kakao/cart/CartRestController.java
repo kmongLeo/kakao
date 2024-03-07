@@ -58,7 +58,7 @@ public class CartRestController {
     }
 
     @PostMapping("/carts/clear")
-    public void deleteCart(@RequestParam int cartId){
-        cartService.deleteCart(cartId);
+    public void deleteCart(@AuthenticationPrincipal CustomUserDetails user){
+        cartService.deleteCart(user.getUser());
     }
 }
