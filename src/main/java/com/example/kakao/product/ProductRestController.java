@@ -15,11 +15,22 @@ import java.util.List;
 public class ProductRestController {
 
 
-    // TODO : product 전체 조회
-    //@GetMapping("/products")
+    private final ProductService productService;
 
+    // (기능4) 전체 상품 목록 조회
+    @GetMapping("/products")
+    public ResponseEntity<?> findAll(@RequestParam(defaultValue = "0") int page) {
+        List<ProductResponse.FindAllDTO> responseDTOs = productService.findAll(page);
+        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(responseDTOs);
+        return ResponseEntity.ok(apiResult);
+    }
 
-    // TODO : (기능5) 개별 상품 상세 조회
-    // @GetMapping("/products/{id}")
+    // (기능5) 개별 상품 상세 조회
+    @GetMapping("/products/{id}")
+    public ResponseEntity<?> findById(@PathVariable int id) {
+        ProductResponse.FindByIdDTO responseDTO = productService.findById(id);
+        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(responseDTO);
+        return ResponseEntity.ok(apiResult);
+    }
 
 }
