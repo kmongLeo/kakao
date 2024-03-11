@@ -1,11 +1,7 @@
 package com.example.kakao.cart;
 
 import com.example.kakao._core.security.CustomUserDetails;
-import com.example.kakao._core.security.CustomUserDetailsService;
 import com.example.kakao._core.utils.ApiUtils;
-import com.example.kakao.option.OptionResponse;
-import com.example.kakao.user.User;
-import com.example.kakao.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,12 +25,6 @@ public class CartRestController {
 
     @Autowired
     private CartService cartService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private CustomUserDetailsService customUserDetails;
 
     // (기능8) 장바구니 담기
     @PostMapping("/carts/add")

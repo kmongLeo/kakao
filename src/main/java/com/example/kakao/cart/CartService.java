@@ -25,9 +25,6 @@ public class CartService {
     @Autowired
     private OptionJPARepository optionJPARepository;
 
-    @Autowired
-    private UserJPARepository userJPARepository;
-
     @Transactional
     public void addCart(List<CartRequest> request, User user){
         // [ { optionId:1, quantity:5 }, { optionId:2, quantity:5 } ]
