@@ -24,15 +24,17 @@ public class UserRestController {
 
     // (기능1) 회원가입
      @PostMapping("/join")
-    public ResponseEntity<User> join(@RequestBody UserRequest request){
+    public ResponseEntity<?> join(@RequestBody UserRequest request){
          User user = userService.join(request);
-         return ResponseEntity.ok(user);
+         ApiUtils.ApiResult<?> apiResult = ApiUtils.success(user);
+         return ResponseEntity.ok(apiResult);
      }
 
     // (기능2) 로그인
      @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UserRequest request){
-         return ResponseEntity.ok(userService.login(request));
+    public ResponseEntity<?> login(@RequestBody UserRequest request){
+         String jwt =userService.login(request);
+         return ResponseEntity.ok().header(JwtTokenProvider.HEADER, jwt).body(ApiUtils.success(null));
      }
 
 
