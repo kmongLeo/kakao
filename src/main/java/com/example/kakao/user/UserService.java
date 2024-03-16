@@ -30,26 +30,22 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
-
     @Transactional
     public User join(UserRequest request) {
         try{
-            if(userJPARepository.existsByUsername(request.getUsername())){
-                throw new Exception500("duplicated user");
+            if(userJPARepository.existsByEmail(request.getEmail())){
+                throw new Exception400("동일한 이메일이 존재합니다 : "+request.getEmail());
             }
 
             String password = passwordEncoder.encode(request.getPassword());
 
-            //TODO: 리팩토링 필요
             List<String> roles = new ArrayList<>();
             roles.add("ROLE_USER");
             User user = request.toUserEntity(password, roles);
 
             userJPARepository.save(user);
         } catch (Exception e){
-            throw new Exception401("failed to join");
+            throw new Exception500("failed to join");
         }
 
         return userJPARepository.findByUsername(request.getUsername())
@@ -65,7 +61,7 @@ public class UserService {
             throw new Exception401("wrong email or password");
         }
 
-        String token = jwtTokenProvider.create(user);
+        String token = JwtTokenProvider.create(user);
 
         return token;
     }
