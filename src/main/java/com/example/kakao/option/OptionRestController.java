@@ -1,6 +1,9 @@
 package com.example.kakao.option;
 
 import com.example.kakao._core.utils.ApiUtils;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +24,11 @@ public class OptionRestController {
      * @return
      * 성공 시 Option 리스트 반환
      */
-     @GetMapping("/products/{id}/options")
-    public ResponseEntity<?> getProductOptions(@PathVariable("id") int id){
+    @Operation(summary = "상품 옵션 조회 API", description = "해당 product의 option을 조회합니다.")
+    @GetMapping("/products/{id}/options")
+    public ResponseEntity<?> getProductOptions(
+            @Parameter(name= "id",description = "product id", example = "1")
+            @PathVariable("id") int id){
          List<OptionResponse> optionResponses = optionService.getOptions(id);
          return ResponseEntity.ok().body(optionResponses);
      }
@@ -32,7 +38,8 @@ public class OptionRestController {
      * @return
      * Option 전체 반환
      */
-     @GetMapping("/options")
+    @Operation(summary = "전체 옵션 조회 API", description = "전체 option을 조회합니다.")
+    @GetMapping("/options")
     public List<OptionResponse> getAllOptions(){
          return optionService.findAll();
      }

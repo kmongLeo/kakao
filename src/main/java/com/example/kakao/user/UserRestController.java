@@ -2,6 +2,8 @@ package com.example.kakao.user;
 
 import com.example.kakao._core.security.JwtTokenProvider;
 import com.example.kakao._core.utils.ApiUtils;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +25,8 @@ public class UserRestController {
     private UserService userService;
 
     // (기능1) 회원가입
-     @PostMapping("/join")
+    @Operation(summary = "회원가입 API", description = "비회원 유저의 회원가입 API이며, email 중복을 체크합니다.")
+    @PostMapping("/join")
     public ResponseEntity<?> join(@RequestBody UserRequest request){
          User user = userService.join(request);
          ApiUtils.ApiResult<?> apiResult = ApiUtils.success(user);
@@ -31,6 +34,7 @@ public class UserRestController {
      }
 
     // (기능2) 로그인
+    @Operation(summary = "로그인 API", description = "기존 유저의 로그인 API이며 jwt token을 생성합니다.")
      @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserRequest request){
          String jwt =userService.login(request);
