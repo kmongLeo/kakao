@@ -16,8 +16,6 @@ import java.util.stream.Collectors;
 * 그 product의 option -> item에 있음
 * 총 금액
 * */
-
-// 상당히 문제있음 리스폰스가 두번 나옴...... 왜?????
 @Getter
 @Setter
 public class OrderResponse {
@@ -29,7 +27,9 @@ public class OrderResponse {
     public OrderResponse(Order order, List<Item> itemList, int totalPrice) {
         this.orederId = order.getId();
         this.productList = itemList.stream()
-                .map(item -> new ProductDTO(item.getOption().getProduct(), itemList)).collect(Collectors.toList());
+                .map(item -> item.getOption().getProduct()).distinct()
+                .map(product -> new ProductDTO(product, itemList))
+                .collect(Collectors.toList());
         this.totalPrice = totalPrice;
     }
 
@@ -40,7 +40,8 @@ public class OrderResponse {
 
         public ProductDTO(Product product, List<Item> items) {
             this.productName = product.getProductName();
-            this.itemList = items.stream().map(item -> new ItemDTO(item, item.getOption()))
+            this.itemList = items.stream()
+                    .map(item -> new ItemDTO(item, item.getOption()))
                     .collect(Collectors.toList());
 
         }
