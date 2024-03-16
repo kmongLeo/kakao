@@ -24,13 +24,15 @@ public class OrderResponse {
     private List<OrderResponse.ProductDTO> productList;
     private int totalPrice;
 
-    public OrderResponse(Order order, List<Item> itemList, int totalPrice) {
+    public OrderResponse(Order order, List<Item> itemList) {
         this.orederId = order.getId();
         this.productList = itemList.stream()
                 .map(item -> item.getOption().getProduct()).distinct()
                 .map(product -> new ProductDTO(product, itemList))
                 .collect(Collectors.toList());
-        this.totalPrice = totalPrice;
+        this.totalPrice = itemList.stream()
+                .mapToInt(item -> item.getOption().getPrice()*item.getQuantity())
+                .sum();
     }
 
     @Getter

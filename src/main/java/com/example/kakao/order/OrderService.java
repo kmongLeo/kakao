@@ -46,7 +46,7 @@ public class OrderService {
 
         //주문내역 저장 - carts = item
         List<Item> items = new ArrayList<>();
-        int totalPrice = 0;
+
         for(Cart cart : carts){
             Item item = Item.builder()
                     .option(cart.getOption())
@@ -55,8 +55,6 @@ public class OrderService {
                     .price(cart.getPrice())
                     .build();
 
-            totalPrice += cart.getPrice();
-
             items.add(item);
         }
         itemJPARepository.saveAll(items);
@@ -64,7 +62,7 @@ public class OrderService {
         //장바구니 지워
         cartJPARepository.deleteByUserId(user.getId());
 
-        return new OrderResponse(order, items, totalPrice);
+        return new OrderResponse(order, items);
 
     }
 
@@ -74,12 +72,6 @@ public class OrderService {
 
         List<Item> itemList = itemJPARepository.findAllByOrderId(orderId);
 
-        //TODO:코드 반복됨 - 맘에 안듦
-        int totalPrice = 0;
-        for(Item item : itemList){
-            totalPrice += item.getPrice();
-        }
-
-        return new OrderResponse(order, itemList, totalPrice);
+        return new OrderResponse(order, itemList);
     }
 }
