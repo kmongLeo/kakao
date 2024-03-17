@@ -11,7 +11,7 @@ Entity 분석하기
 2. 분석한 결과에 따라서 ERD 테이블 그리기
 3. ERD 캡처하여 ReadMe에 커밋하기
 
-![img.png](img.png)
+![img_1.png](img_1.png)
 
 브랜치 전략
 1. Feat/[본인계정]에 커밋 쌓기
