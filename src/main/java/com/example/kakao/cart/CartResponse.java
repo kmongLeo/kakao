@@ -13,15 +13,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-
-
-
 public class CartResponse {
 
-    /*
-     carts :[]
-     totalprice
-     */
     @Getter
     @Setter
     public static class CartUpdateDTO{
@@ -53,15 +46,6 @@ public class CartResponse {
     }
 
 
-    /*
-        * "products" :[
-            "id"
-            "productname"
-            "carts" :[
-                 "option": {}
-            ]
-            "total price" :
-        ]*/
     @Getter
     @Setter
     public static class FindCartDTO {
