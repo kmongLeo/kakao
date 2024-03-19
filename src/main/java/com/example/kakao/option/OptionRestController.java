@@ -29,7 +29,7 @@ public class OptionRestController {
     public ResponseEntity<?> getProductOptions(
             @Parameter(name= "id",description = "product id", example = "1")
             @PathVariable("id") int id){
-         List<OptionResponse> optionResponses = optionService.getOptions(id);
+         List<OptionResponse.ProductOptionDTO> optionResponses = optionService.getProductOptions(id);
          return ResponseEntity.ok().body(optionResponses);
      }
 
@@ -40,8 +40,10 @@ public class OptionRestController {
      */
     @Operation(summary = "전체 옵션 조회 API", description = "전체 option을 조회합니다.")
     @GetMapping("/options")
-    public List<OptionResponse> getAllOptions(){
-         return optionService.findAll();
+    public ResponseEntity<?> getAllOptions(){
+        List<OptionResponse.FindAllDTO> response = optionService.findAll();
+        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(response);
+        return ResponseEntity.ok(apiResult);
      }
 
 }

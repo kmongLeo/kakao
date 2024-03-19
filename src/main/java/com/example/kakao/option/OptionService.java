@@ -18,14 +18,18 @@ public class OptionService {
     private OptionJPARepository optionJPARepository;
 
     @Transactional(readOnly = true)
-    public List<OptionResponse> getOptions(int productId){
-        List<Option> optionList = optionJPARepository.findByProductId(productId);
-        return optionList.stream().map(OptionResponse::of).collect(Collectors.toList());
+    public List<OptionResponse.ProductOptionDTO> getProductOptions(int productId){
+        List<OptionResponse.ProductOptionDTO> optionList = optionJPARepository.findByProductId(productId)
+                .stream().map(OptionResponse.ProductOptionDTO::new)
+                .collect(Collectors.toList());;
+        return optionList;
     }
 
     @Transactional(readOnly = true)
-    public List<OptionResponse> findAll() {
-        List<Option> optionList = optionJPARepository.findAll();
-        return optionList.stream().map(OptionResponse::of).collect(Collectors.toList());
+    public List<OptionResponse.FindAllDTO> findAll() {
+        List<OptionResponse.FindAllDTO> optionList = optionJPARepository.findAll()
+                .stream().map(OptionResponse.FindAllDTO::new)
+                .collect(Collectors.toList());
+        return optionList;
     }
 }
