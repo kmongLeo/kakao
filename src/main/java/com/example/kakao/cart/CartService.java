@@ -65,7 +65,7 @@ public class CartService {
     }
 
     @Transactional
-    public CartResponse.CartUpdateResponse updateCart(List<CartRequest> request, User user) {  //cartId 같이 들어옴
+    public CartResponse.CartUpdateDTO updateCart(List<CartRequest> request, User user) {  //cartId 같이 들어옴
         // 1. cartId 중복
         HashSet<Integer> set = new HashSet<>();
         for(CartRequest req : request) {
@@ -91,17 +91,20 @@ public class CartService {
             }
         }
 
-        return new CartResponse.CartUpdateResponse(userCartList);
+        return new CartResponse.CartUpdateDTO(userCartList);
 
     }
 
-    public List<CartResponse> getCartList(User user) {
+    public CartResponse.FindCartDTO getCartList(User user) {
         List<Cart> cart = cartJPARepository.findByUserId(user.getId());
-        return cart.stream().map(CartResponse::of).collect(Collectors.toList());
+        return new CartResponse.FindCartDTO(cart);
     }
 
     @Transactional
     public void deleteCart(User user) {
+        if(cartJPARepository.findByUserId(user.getId()).isEmpty()){
+            throw new Exception400("already empty cart");
+        }
         cartJPARepository.deleteByUserId(user.getId());
     }
 }
