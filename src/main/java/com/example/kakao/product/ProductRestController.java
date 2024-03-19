@@ -25,25 +25,23 @@ public class ProductRestController {
 
     @Operation(summary = "상품 조회 API", description = "상품을 조회하는 API 이며, 페이징을 포함합니다.")
     @GetMapping("/products")
-    public ResponseEntity<Page<ProductResponse>> getProducts(
+    public ResponseEntity<?> getProducts(
             @Parameter(description = "page number", example = "3", required = true)
             @RequestParam(value = "page", defaultValue="0") int page){
-        Page<ProductResponse> productResponse = productService.getAllProductsPaging(page);
-        return ResponseEntity.ok(productResponse);
+        List<ProductResponse.FindAllDTO> response  = productService.getAllProductsPaging(page);
+        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(response);
+        return ResponseEntity.ok(apiResult);
     }
 
-    @Operation(summary = "상품 조회 API", description = "상품을 조회하는 API 이며, 페이징을 포함하지 않습니다.")
-    @GetMapping("/productList")
-    public List<ProductResponse> getAllProducts(){
-        return productService.getAllProducts();
-    }
 
-    @Operation(summary = "상품 조회 API", description = "해당 id의 상품을 조회합니다.")
+    @Operation(summary = "상품 조회 detail API", description = "해당 id의 상품을 조회합니다.")
     @GetMapping("/products/{id}")
-    public ProductResponse getProduct(
+    public ResponseEntity<?> getProductDetail(
             @Parameter(name = "id", description = "product id", example = "1")
             @PathVariable("id") int id){
-        return productService.getProduct(id);
+        ProductResponse.ProductDetailDTO response =productService.getProductDetail(id);
+        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(response);
+        return ResponseEntity.ok(apiResult);
     }
 
 }
