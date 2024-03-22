@@ -2,26 +2,37 @@ package com.example.kakao.option;
 
 import lombok.*;
 
-@Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+
 public class OptionResponse {
 
-    private String optionName;
-    private int price;
-    private int productId;
+    @Getter
+    @Setter
+    public static class FindAllDTO{
+        private String optionName;
+        private int price;
+        private int productId;
 
-    @Builder
-    public OptionResponse(String optionName, int price, int productId) {
-        this.optionName = optionName;
-        this.price = price;
-        this.productId = productId;
+        public FindAllDTO(Option option) {
+            this.optionName = option.getOptionName();
+            this.price = option.getPrice();
+            this.productId = option.getProduct().getId();
+        }
     }
 
-    public static OptionResponse of(Option option) {
-        return OptionResponse.builder()
-                .optionName(option.getOptionName())
-                .price(option.getPrice())
-                .productId(option.getProduct().getId())
-                .build();
+
+    @Getter
+    @Setter
+    public static class ProductOptionDTO{
+        private int id;
+        private String optionName;
+        private int price;
+        private int productId;
+
+        public ProductOptionDTO(Option option) {
+            this.id = option.getId();
+            this.optionName = option.getOptionName();
+            this.price = option.getPrice();
+            this.productId = option.getProduct().getId();
+        }
     }
 }

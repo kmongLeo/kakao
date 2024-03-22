@@ -2,52 +2,74 @@ package com.example.kakao.product;
 
 import com.example.kakao.option.Option;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Getter
-@NoArgsConstructor
 public class ProductResponse {
 
-    private int id;
-    private String productName;
-    private String description;
-    private String image;
-    private int price;
+    @Getter
+    @Setter
+    public static class FindAllDTO{
+        private int id;
+        private String productName;
+        private String description;
+        private String image;
+        private int price;
 
-    private List<Option> options;
-
-    @Builder
-    public ProductResponse(int id, String productName, String description, String image, int price,
-            List<Option> options) {
-        this.id = id;
-        this.productName = productName;
-        this.description = description;
-        this.image = image;
-        this.price = price;
-        this.options = options;
+        public FindAllDTO(Product product) {
+            this.id = product.getId();
+            this.productName = product.getProductName();
+            this.description = product.getDescription();
+            this.image = product.getImage();
+            this.price = product.getPrice();
+        }
     }
 
-    public static ProductResponse of(Product product){
-        return ProductResponse.builder()
-                .id(product.getId())
-                .productName(product.getProductName())
-                .description(product.getDescription())
-                .price(product.getPrice())
-                .image(product.getImage())
-                .build();
-    }
+    /*
+    * product detail{
+    *   options[]
+    * }
+    *
+    * */
+    @Getter
+    @Setter
+    public static class ProductDetailDTO{
+        private int id;
+        private String productName;
+        private String description;
+        private String image;
+        private int price;
 
-    public static ProductResponse of(Product product, List<Option> options){
-        return ProductResponse.builder()
-                .id(product.getId())
-                .productName(product.getProductName())
-                .description(product.getDescription())
-                .price(product.getPrice())
-                .image(product.getImage())
-                .options(options)
-                .build();
+        private List<OptionDTO> option;
+
+        public ProductDetailDTO(Product product, List<Option> option) {
+            this.id = product.getId();
+            this.productName = product.getProductName();
+            this.description = product.getDescription();
+            this.image = product.getImage();
+            this.price = product.getPrice();
+            this.option = option.stream().map(option1 -> new OptionDTO(option1))
+                    .collect(Collectors.toList());
+        }
+
+        @Getter
+        @Setter
+        public class OptionDTO{
+            private int id;
+            private String optionName;
+            private int price;
+
+            public OptionDTO(Option option) {
+                this.id = option.getId();
+                this.optionName = option.getOptionName();
+                this.price = option.getPrice();
+            }
+        }
+
     }
 
 }
