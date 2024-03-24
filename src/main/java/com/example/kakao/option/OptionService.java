@@ -14,8 +14,7 @@ import java.util.stream.Collectors;
 @Service
 public class OptionService {
 
-    @Autowired
-    private OptionJPARepository optionJPARepository;
+    private final OptionJPARepository optionJPARepository;
 
     @Transactional(readOnly = true)
     public List<OptionResponse.ProductOptionDTO> getProductOptions(int productId){
