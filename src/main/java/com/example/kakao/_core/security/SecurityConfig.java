@@ -2,7 +2,10 @@ package com.example.kakao._core.security;
 
 import com.example.kakao._core.errors.exception.Exception401;
 import com.example.kakao._core.errors.exception.Exception403;
+import com.example.kakao._core.security.oauth.OAuth2LoginFailureHandler;
+import com.example.kakao._core.security.oauth.OAuth2LoginSuccessHandler;
 import com.example.kakao._core.utils.FilterResponseUtils;
+import com.example.kakao._core.security.oauth.CustomOAuthUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +26,11 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @RequiredArgsConstructor
 @Configuration
 public class SecurityConfig {
+
+    private final CustomOAuthUserService customOAuthUserService;
+
+    private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+    private final OAuth2LoginFailureHandler oAuth2LoginFailureHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -85,6 +93,14 @@ public class SecurityConfig {
                         .access("hasRole('ADMIN')")
                         .anyRequest().permitAll()
         );
+
+        http.oauth2Login()
+                .successHandler(oAuth2LoginSuccessHandler)
+                .userInfoEndpoint()
+                .userService(customOAuthUserService)
+                ;
+//                .failureHandler(oAuth2LoginFailureHandler)
+
 
         return http.build();
     }

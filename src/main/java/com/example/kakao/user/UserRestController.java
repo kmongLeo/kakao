@@ -1,6 +1,7 @@
 package com.example.kakao.user;
 
 import com.example.kakao._core.security.JwtTokenProvider;
+import com.example.kakao._core.security.oauth.CustomOAuthUserService;
 import com.example.kakao._core.utils.ApiUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -8,21 +9,22 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
 public class UserRestController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+    private  final CustomOAuthUserService authUserService;
 
     // (기능1) 회원가입
     @Operation(summary = "회원가입 API", description = "비회원 유저의 회원가입 API이며, email 중복을 체크합니다.")
@@ -40,6 +42,13 @@ public class UserRestController {
          String jwt =userService.login(request);
          return ResponseEntity.ok().header(JwtTokenProvider.HEADER, jwt).body(ApiUtils.success(null));
      }
+
+    //kakao login callback
+    @GetMapping("/login/kakao")
+    public ResponseEntity<?> kakaologin(){
+
+        return ResponseEntity.ok("kakao login success");
+    }
 
 
     // 사용 안함 - 프론트 요구사항에 이메일 중복 검사 로직 없음.
