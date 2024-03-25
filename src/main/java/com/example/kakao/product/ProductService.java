@@ -19,11 +19,8 @@ import java.util.stream.Collectors;
 @Service
 public class ProductService {
 
-    @Autowired
-    private ProductJPARepository productJPARepository;
-
-    @Autowired
-    private OptionJPARepository optionJPARepository;
+    private final ProductJPARepository productJPARepository;
+    private final OptionJPARepository optionJPARepository;
 
     @Transactional(readOnly = true)
     public List<ProductResponse.FindAllDTO> getAllProductsPaging(int page){

@@ -19,8 +19,7 @@ import java.util.List;
 @RestController
 public class CartRestController {
 
-    @Autowired
-    private CartService cartService;
+    private final CartService cartService;
 
     // (기능8) 장바구니 담기
     @Operation(summary = "장바구니 추가 API", description = "해당 유저의 장바구니에 상품을 추가합니다. 동일한 상품과 옵션은 추가할 수 없습니다.")

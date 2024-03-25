@@ -20,8 +20,7 @@ import java.util.List;
 @RestController
 public class ProductRestController {
 
-    @Autowired
-    private ProductService productService;
+    private final ProductService productService;
 
     @Operation(summary = "상품 조회 API", description = "상품을 조회하는 API 이며, 페이징을 포함합니다.")
     @GetMapping("/products")

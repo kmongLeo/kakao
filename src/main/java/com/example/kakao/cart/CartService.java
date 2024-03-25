@@ -19,11 +19,8 @@ import java.util.stream.Collectors;
 @Service
 public class CartService {
 
-    @Autowired
-    private CartJPARepository cartJPARepository;
-
-    @Autowired
-    private OptionJPARepository optionJPARepository;
+    private final CartJPARepository cartJPARepository;
+    private final OptionJPARepository optionJPARepository;
 
     @Transactional
     public void addCart(List<CartRequest> request, User user){
